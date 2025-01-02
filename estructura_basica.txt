@@ -1,0 +1,7 @@
+/tareas_app
+├── android/
+├── ios/
+├── lib/
+│   ├── main.dart  <-- Aquí comenzamos a programar
+├── test/
+└── pubspec.yaml  <-- Archivo de configuración de dependencias
