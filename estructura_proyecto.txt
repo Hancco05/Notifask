@@ -1,0 +1,13 @@
+/login_app/                    # Carpeta raíz del proyecto
+├── /android/                  # Archivos específicos de Android
+├── /ios/                      # Archivos específicos de iOS
+├── /lib/                      # Carpeta principal de código Flutter
+│   ├── /screens/              # Contiene las pantallas principales
+│   │   ├── login_screen.dart      # Pantalla de inicio de sesión
+│   │   ├── home_screen.dart       # Pantalla después de iniciar sesión
+│   ├── /services/             # Contiene la lógica de servicios
+│   │   ├── auth_service.dart      # Servicio para manejar autenticación
+│   ├── main.dart              # Archivo principal del proyecto
+├── /test/                     # Pruebas unitarias y widgets
+├── pubspec.yaml               # Archivo de configuración del proyecto
+├── README.md                  # Descripción del proyecto
