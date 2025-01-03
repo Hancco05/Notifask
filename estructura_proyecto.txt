@@ -1,13 +1,16 @@
-/login_app/                    # Carpeta raíz del proyecto
-├── /android/                  # Archivos específicos de Android
-├── /ios/                      # Archivos específicos de iOS
-├── /lib/                      # Carpeta principal de código Flutter
-│   ├── /screens/              # Contiene las pantallas principales
-│   │   ├── login_screen.dart      # Pantalla de inicio de sesión
-│   │   ├── home_screen.dart       # Pantalla después de iniciar sesión
-│   ├── /services/             # Contiene la lógica de servicios
-│   │   ├── auth_service.dart      # Servicio para manejar autenticación
-│   ├── main.dart              # Archivo principal del proyecto
-├── /test/                     # Pruebas unitarias y widgets
-├── pubspec.yaml               # Archivo de configuración del proyecto
-├── README.md                  # Descripción del proyecto
+/login_app/
+├── /lib/
+│   ├── /screens/
+│   │   ├── login_screen.dart          # Pantalla de inicio de sesión y registro
+│   │   ├── home_screen.dart           # Pantalla del menú principal (logueado)
+│   │   ├── add_task_screen.dart       # Pantalla para agregar tarea
+│   │   ├── task_list_screen.dart      # Pantalla para ver la lista de tareas
+│   │   ├── pending_tasks_screen.dart  # Pantalla para tareas pendientes
+│   │   ├── calendar_screen.dart       # Pantalla del calendario
+│   ├── /models/
+│   │   ├── task_model.dart            # Modelo para las tareas
+│   ├── /services/
+│   │   ├── auth_service.dart          # Servicio para manejar autenticación
+│   │   ├── task_service.dart          # Servicio para manejar las tareas
+│   ├── main.dart                      # Archivo principal del proyecto
+├── pubspec.yaml
