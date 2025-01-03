@@ -1,32 +1,27 @@
 import 'package:flutter/material.dart';
-import 'home_screen.dart';
-import 'register_screen.dart';
 import '../services/auth_service.dart';
 
-class LoginScreen extends StatefulWidget {
+class RegisterScreen extends StatefulWidget {
   @override
-  _LoginScreenState createState() => _LoginScreenState();
+  _RegisterScreenState createState() => _RegisterScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _RegisterScreenState extends State<RegisterScreen> {
   final _authService = AuthService();
   final _usernameController = TextEditingController();
   final _passwordController = TextEditingController();
   String? _errorMessage;
 
-  Future<void> _login() async {
+  Future<void> _register() async {
     final username = _usernameController.text.trim();
     final password = _passwordController.text.trim();
 
-    final success = await _authService.login(username, password);
+    final success = await _authService.register(username, password);
     if (success) {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => HomeScreen()),
-      );
+      Navigator.pop(context); // Vuelve al login
     } else {
       setState(() {
-        _errorMessage = "Invalid username or password";
+        _errorMessage = "Username already exists";
       });
     }
   }
@@ -34,7 +29,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Login")),
+      appBar: AppBar(title: Text("Register")),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -56,17 +51,8 @@ class _LoginScreenState extends State<LoginScreen> {
                 style: TextStyle(color: Colors.red),
               ),
             ElevatedButton(
-              onPressed: _login,
-              child: Text("Login"),
-            ),
-            TextButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => RegisterScreen()),
-                );
-              },
-              child: Text("Create an account"),
+              onPressed: _register,
+              child: Text("Register"),
             ),
           ],
         ),
