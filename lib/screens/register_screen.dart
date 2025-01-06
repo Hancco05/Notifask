@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../services/auth_service.dart';
+import 'login_screen.dart';
 
 class RegisterScreen extends StatefulWidget {
   @override
@@ -16,28 +17,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
     final username = _usernameController.text.trim();
     final password = _passwordController.text.trim();
 
-    if (username.isEmpty || password.isEmpty) {
+    final success = await _authService.register(username, password);
+    if (success) {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => LoginScreen()),
+      );
+    } else {
       setState(() {
-        _errorMessage = "Username and password cannot be empty";
+        _errorMessage = "Error creating account";
       });
-      return;
-    }
-
-    try {
-      final success = await _authService.register(username, password);
-      if (success) {
-        print('User registered successfully: $username');
-        Navigator.pop(context); // Vuelve al login
-      } else {
-        setState(() {
-          _errorMessage = "Username already exists";
-        });
-      }
-    } catch (e) {
-      setState(() {
-        _errorMessage = "An unexpected error occurred: $e";
-      });
-      print('Error during registration: $e');
     }
   }
 
@@ -67,7 +56,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
               ),
             ElevatedButton(
               onPressed: _register,
-              child: Text("Register"),
+              child: Text("Create Account"),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => LoginScreen()),
+                );
+              },
+              child: Text("Already have an account? Login"),
             ),
           ],
         ),

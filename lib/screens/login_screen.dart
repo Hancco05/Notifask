@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import '../services/auth_service.dart';
 import 'home_screen.dart';
 import 'register_screen.dart';
-import '../services/auth_service.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -18,31 +18,18 @@ class _LoginScreenState extends State<LoginScreen> {
     final username = _usernameController.text.trim();
     final password = _passwordController.text.trim();
 
-    if (username.isEmpty || password.isEmpty) {
+    final success = await _authService.login(username, password);
+    if (success) {
+      // Si el login es exitoso, redirigir a HomeScreen
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => HomeScreen()),
+      );
+    } else {
+      // Mostrar mensaje de error si el login falla
       setState(() {
-        _errorMessage = "Username and password cannot be empty";
+        _errorMessage = "Invalid username or password";
       });
-      return;
-    }
-
-    try {
-      final success = await _authService.login(username, password);
-      if (success) {
-        print('Login successful for user: $username');
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => HomeScreen()),
-        );
-      } else {
-        setState(() {
-          _errorMessage = "Invalid username or password";
-        });
-      }
-    } catch (e) {
-      setState(() {
-        _errorMessage = "An unexpected error occurred: $e";
-      });
-      print('Error during login: $e');
     }
   }
 
