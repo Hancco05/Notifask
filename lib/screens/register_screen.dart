@@ -16,13 +16,28 @@ class _RegisterScreenState extends State<RegisterScreen> {
     final username = _usernameController.text.trim();
     final password = _passwordController.text.trim();
 
-    final success = await _authService.register(username, password);
-    if (success) {
-      Navigator.pop(context); // Vuelve al login
-    } else {
+    if (username.isEmpty || password.isEmpty) {
       setState(() {
-        _errorMessage = "Username already exists";
+        _errorMessage = "Username and password cannot be empty";
       });
+      return;
+    }
+
+    try {
+      final success = await _authService.register(username, password);
+      if (success) {
+        print('User registered successfully: $username');
+        Navigator.pop(context); // Vuelve al login
+      } else {
+        setState(() {
+          _errorMessage = "Username already exists";
+        });
+      }
+    } catch (e) {
+      setState(() {
+        _errorMessage = "An unexpected error occurred: $e";
+      });
+      print('Error during registration: $e');
     }
   }
 

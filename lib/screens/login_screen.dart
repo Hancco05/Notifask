@@ -18,16 +18,31 @@ class _LoginScreenState extends State<LoginScreen> {
     final username = _usernameController.text.trim();
     final password = _passwordController.text.trim();
 
-    final success = await _authService.login(username, password);
-    if (success) {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => HomeScreen()),
-      );
-    } else {
+    if (username.isEmpty || password.isEmpty) {
       setState(() {
-        _errorMessage = "Invalid username or password";
+        _errorMessage = "Username and password cannot be empty";
       });
+      return;
+    }
+
+    try {
+      final success = await _authService.login(username, password);
+      if (success) {
+        print('Login successful for user: $username');
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => HomeScreen()),
+        );
+      } else {
+        setState(() {
+          _errorMessage = "Invalid username or password";
+        });
+      }
+    } catch (e) {
+      setState(() {
+        _errorMessage = "An unexpected error occurred: $e";
+      });
+      print('Error during login: $e');
     }
   }
 
